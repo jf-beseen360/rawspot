@@ -1,7 +1,13 @@
-import type { PublicProfileId } from "@/domain/shared/id";
+import type { Position } from "@/domain/shared/position";
 import type { PublicProfile } from "./types";
 
+export interface PublicProfileListFilters {
+  position?: Position;
+  country?: string;
+  minScore?: number;
+}
+
 export interface PublicProfileRepository {
-  findById(id: PublicProfileId): Promise<PublicProfile | null>;
-  list(): Promise<PublicProfile[]>;
+  findBySlug(slug: string): Promise<PublicProfile | null>;
+  list(filters?: PublicProfileListFilters): Promise<PublicProfile[]>;
 }
