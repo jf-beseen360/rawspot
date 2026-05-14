@@ -15,6 +15,13 @@
       "when": 1778777965010,
       "tag": "0001_melted_edwin_jarvis",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1778787369755,
+      "tag": "0002_warm_lord_tyger",
+      "breakpoints": true
     }
   ]
 }

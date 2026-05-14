@@ -1,10 +1,12 @@
 import {
   boolean,
+  index,
   integer,
   jsonb,
   pgTable,
   text,
   timestamp,
+  uuid,
 } from "drizzle-orm/pg-core";
 import type {
   AccountHolder,
@@ -18,8 +20,12 @@ import {
   positionEnum,
 } from "./enums";
 
+// FK auth.users(id) côté SQL (cf. migration 0002). Drizzle ne connaît pas
+// le schéma auth de Supabase, donc on déclare la colonne sans references()
+// ici ; la contrainte FK est posée par la migration SQL manuelle.
 export const players = pgTable("players", {
   id: text("id").primaryKey(),
+  userId: uuid("user_id"),
   phone: text("phone").notNull(),
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
@@ -58,4 +64,6 @@ export const players = pgTable("players", {
   updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" })
     .notNull()
     .defaultNow(),
-});
+}, (table) => [
+  index("players_user_id_idx").on(table.userId),
+]);

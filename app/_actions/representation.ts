@@ -10,14 +10,19 @@ import {
   respondToRequest as respondToRequestUseCase,
 } from "@/domain/representation";
 import type { AgentId } from "@/domain/representation/types";
+import {
+  requirePlayerOwnership,
+  requireRole,
+} from "@/lib/auth/server";
 import { playerRepository } from "@/lib/db/repositories/player.repository";
 import { representationRepository } from "@/lib/db/repositories/representation.repository";
 import { ok, type Result } from "@/lib/result";
 import type { PlayerId } from "@/domain/shared/id";
 
 // Server Action B — Envoi d'une demande de représentation.
-// Orchestre : fetch Player + fetch existing requests + use case domaine +
-// persiste si succès. Pas de logique métier ici.
+// Auth (PR #11a) : requireRole("agent") — seul un utilisateur ayant le rôle
+// "agent" (ou "admin") peut envoyer une demande. Le binding agentId ↔
+// session.user.id sera ajouté en PR #17 quand la table fifa_agents existera.
 export async function sendRepresentationRequest(
   agentId: string,
   agentName: string,
@@ -25,6 +30,8 @@ export async function sendRepresentationRequest(
   playerId: string,
   message: string,
 ): Promise<Result<RepresentationRequest, SendRequestError>> {
+  await requireRole("agent");
+
   const typedPlayerId = playerId as PlayerId;
   const typedAgentId = agentId as AgentId;
 
@@ -62,8 +69,9 @@ export async function sendRepresentationRequest(
 }
 
 // Server Action C — Réponse à une demande de représentation.
-// Orchestre : fetch request + use case domaine + applyResponse transactionnel
-// (update request + optionnel update player.representation atomique).
+// Auth (PR #11a) : requirePlayerOwnership(request.playerId) — seul le joueur
+// destinataire (ou admin) peut accepter/refuser sa propre demande.
+// Throw AuthError "unauthorized" | "forbidden" | "not_found" sinon.
 export async function respondToRepresentationRequest(
   requestId: string,
   response: "ACCEPTED" | "REJECTED",
@@ -74,6 +82,8 @@ export async function respondToRepresentationRequest(
   if (!request) {
     throw new Error("request_not_found");
   }
+
+  await requirePlayerOwnership(request.playerId);
 
   const action = response === "ACCEPTED" ? "accept" : "reject";
   const result = respondToRequestUseCase(request, action);
