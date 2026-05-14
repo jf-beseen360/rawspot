@@ -7,7 +7,7 @@ import { players } from "@/lib/db/schema/players";
 import type { PlayerId } from "@/domain/shared/id";
 import { isRole, type Role } from "./types";
 
-// Client Supabase côté serveur (Server Components, Server Actions, middleware).
+// Client Supabase côté serveur (Server Components, Server Actions, proxy).
 // cookies() est async depuis Next.js 15+ — toutes les fonctions consumers de
 // ce factory doivent être async.
 export async function createServerSupabaseClient(): Promise<SupabaseClient> {
@@ -27,7 +27,7 @@ export async function createServerSupabaseClient(): Promise<SupabaseClient> {
             }
           } catch {
             // Contexte read-only (Server Component pendant render).
-            // Le refresh des cookies se fera côté middleware.
+            // Le refresh des cookies se fera côté proxy.
           }
         },
       },
