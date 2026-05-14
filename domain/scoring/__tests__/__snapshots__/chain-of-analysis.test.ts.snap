@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`estimateMarketValue > [regression] snapshot of estimateMarketValue for PLAYER, score 70 1`] = `
+{
+  "calculationDetails": [
+    "Score IA × coefficient âge (1.4) × coefficient poste (1.2)",
+    "Indemnité de formation (RSTP art. 20) : 6 années estimées × 10 000 €",
+    "Mécanisme de solidarité (RSTP art. 21) : 5 % de la valeur de transfert réservés aux clubs formateurs",
+  ],
+  "netMax": 272832,
+  "netMin": 99932,
+  "rangeMax": 345800,
+  "rangeMin": 172900,
+  "solidarityMechanism": 12968,
+  "trainingCompensation": 60000,
+}
+`;

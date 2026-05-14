@@ -1,0 +1,69 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`computeScoring > [regression] snapshot of full result for SNAPSHOT_PLAYER 1`] = `
+{
+  "evaluation": {
+    "commentary": "Profil profil dans la fenêtre de transition pré-pro (18 ans, 182 cm, 75 kg). Score IA de 81/100 — niveau très haut. Atouts identifiés : force dos au but, vitesse premiers mètres. Points à renforcer : jeu de tête, mental face au gardien. Score généré sans intervention humaine. Le recruteur reste seul juge en visionnant les vidéos brutes.",
+    "improvementAreas": [
+      "Jeu de tête",
+      "Mental face au gardien",
+    ],
+    "mental": [
+      {
+        "comment": "Indicateurs dans la moyenne pour cette tranche d'âge.",
+        "name": "Mental face au gardien",
+        "note": 7.5,
+      },
+    ],
+    "physical": [
+      {
+        "comment": "Profil physique au-dessus (182 cm, 18 ans) — adéquation marquée au poste.",
+        "name": "Force dos au but",
+        "note": 9,
+      },
+      {
+        "comment": "Profil physique au-dessus (182 cm, 18 ans) — adéquation marquée au poste.",
+        "name": "Vitesse premiers mètres",
+        "note": 9,
+      },
+    ],
+    "strengths": [
+      "Force dos au but",
+      "Vitesse premiers mètres",
+      "Démarquage",
+    ],
+    "tactical": [
+      {
+        "comment": "Maturité tactique attendue à l'âge et dans le contexte.",
+        "name": "Démarquage",
+        "note": 8.5,
+      },
+    ],
+    "technical": [
+      {
+        "comment": "Dossier vidéo complet et contexte de formation favorable.",
+        "name": "Finition pied droit",
+        "note": 8,
+      },
+      {
+        "comment": "Dossier vidéo complet et contexte de formation favorable.",
+        "name": "Finition pied gauche",
+        "note": 8,
+      },
+      {
+        "comment": "Dossier vidéo et formation cohérents avec le niveau attendu.",
+        "name": "Jeu de tête",
+        "note": 7,
+      },
+      {
+        "comment": "Dossier vidéo complet et contexte de formation favorable.",
+        "name": "Première touche",
+        "note": 8,
+      },
+    ],
+  },
+  "generatedAt": 2026-05-14T12:00:00.000Z,
+  "generatedBy": "ia-v1",
+  "value": 81,
+}
+`;
