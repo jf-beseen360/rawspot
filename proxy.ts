@@ -12,7 +12,7 @@ const PROTECTED: ReadonlyArray<{ prefix: string; role: Role }> = [
   { prefix: "/admin", role: "admin" },
 ];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(
@@ -68,7 +68,7 @@ export async function middleware(request: NextRequest) {
   return response;
 }
 
-// Le matcher applique le middleware uniquement aux préfixes protégés.
+// Le matcher applique le proxy uniquement aux préfixes protégés.
 // `:path*` couvre /moi, /moi/x, /moi/x/y, etc.
 export const config = {
   matcher: [

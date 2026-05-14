@@ -1,4 +1,4 @@
-// 403 — page affichée par le middleware quand l'utilisateur est authentifié
+// 403 — page affichée par le proxy quand l'utilisateur est authentifié
 // mais ne dispose pas du rôle requis pour la route demandée.
 
 export default function NonAutorisePage() {
