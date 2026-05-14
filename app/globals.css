@@ -3,11 +3,19 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* RawSpot brand tokens — alignés avec lib/brand.ts BRAND_COLORS. */
+  --color-brand-gold: #D4A017;
+  --color-brand-black: #0A0A0A;
+  --color-brand-white: #FAFAFA;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand-gold: var(--color-brand-gold);
+  --color-brand-black: var(--color-brand-black);
+  --color-brand-white: var(--color-brand-white);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -23,4 +31,74 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+}
+
+/* Splash animation — séquence 4.5 s, CSS pur, pas de lib externe. */
+@keyframes splash-halo-pulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  20% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  60% {
+    opacity: 0.45;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+}
+
+@keyframes splash-fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes splash-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.splash-halo {
+  animation: splash-halo-pulse 4.5s ease-out forwards;
+}
+
+.splash-logo {
+  opacity: 0;
+  animation: splash-fade-up 1s ease-out 0.4s forwards;
+}
+
+.splash-tagline {
+  opacity: 0;
+  animation: splash-fade-up 1s ease-out 1.2s forwards;
+}
+
+.splash-ctas {
+  opacity: 0;
+  animation: splash-fade-in 1s ease-out 2.4s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-halo,
+  .splash-logo,
+  .splash-tagline,
+  .splash-ctas {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
