@@ -54,4 +54,10 @@ export const playerRepository: PlayerRepository = {
     const rows = await getDb().select().from(players).limit(100);
     return rows.map(toPlayer);
   },
+  async updateRepresentation(playerId, representation) {
+    await getDb()
+      .update(players)
+      .set({ representation, updatedAt: new Date() })
+      .where(eq(players.id, playerId));
+  },
 };
