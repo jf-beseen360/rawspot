@@ -6,6 +6,14 @@ import { signInWithOtp, verifyOtp } from "@/lib/auth";
 
 const emailSchema = z.string().email("Email invalide.");
 
+// NEXT_PUBLIC_DEV_OTP_CODE est inliné côté client par Next.js au build.
+// En production, cette variable est absente du bundle (ou ignorée par le
+// serveur quel que soit son contenu, cf. lib/auth/index.ts verifyOtp).
+const DEV_OTP_CODE =
+  process.env.NODE_ENV !== "production"
+    ? process.env.NEXT_PUBLIC_DEV_OTP_CODE
+    : undefined;
+
 type Step = "email" | "otp";
 
 export default function ConnexionPage() {
@@ -103,6 +111,19 @@ export default function ConnexionPage() {
             Un code a été envoyé à{" "}
             <span className="font-medium text-zinc-900">{email}</span>.
           </p>
+
+          {DEV_OTP_CODE ? (
+            <div
+              className="rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-xs text-amber-900"
+              role="note"
+            >
+              <strong>Mode dev</strong> — utilise le code{" "}
+              <code className="rounded bg-amber-100 px-1.5 py-0.5 font-mono text-amber-900">
+                {DEV_OTP_CODE}
+              </code>{" "}
+              pour te connecter sans recevoir d&apos;email.
+            </div>
+          ) : null}
           <label className="flex flex-col gap-1.5">
             <span className="text-xs font-medium uppercase tracking-wider text-zinc-600">
               Code OTP
