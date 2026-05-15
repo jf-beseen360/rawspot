@@ -1,5 +1,10 @@
 import { createServerClient } from "@supabase/ssr";
-import type { Session, SupabaseClient, User } from "@supabase/supabase-js";
+import {
+  createClient as createSupabaseClient,
+  type Session,
+  type SupabaseClient,
+  type User,
+} from "@supabase/supabase-js";
 import { eq } from "drizzle-orm";
 import { cookies } from "next/headers";
 import { getDb } from "@/lib/db/client";
@@ -33,6 +38,29 @@ export async function createServerSupabaseClient(): Promise<SupabaseClient> {
       },
     },
   );
+}
+
+// Client Supabase admin (service_role). UNIQUEMENT pour usages serveur
+// privilégiés — ex. fallback dev OTP via admin.generateLink. NE JAMAIS
+// exposer la clé service_role au client (pas de préfixe NEXT_PUBLIC_).
+//
+// Throw si SUPABASE_SERVICE_ROLE_KEY ou NEXT_PUBLIC_SUPABASE_URL absent :
+// les chemins consumers doivent gérer cette erreur (souvent c'est fatal,
+// car l'admin est requis pour leur fonctionnement).
+export function createAdminSupabaseClient(): SupabaseClient {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !serviceRoleKey) {
+    throw new Error(
+      "Admin Supabase client requires NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env.local",
+    );
+  }
+  return createSupabaseClient(url, serviceRoleKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  });
 }
 
 // Session actuelle (avec access_token + user). Retourne null si non
