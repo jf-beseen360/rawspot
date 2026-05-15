@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { BRAND_COLORS, BRAND_TAGLINE } from "@/lib/brand";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,10 +15,19 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "RawSpot",
-    template: "%s · RawSpot",
+    default: "RawSpot°",
+    template: "%s · RawSpot°",
   },
-  description: "RawSpot.",
+  description: `RawSpot — ${BRAND_TAGLINE} La visibilité qui ouvre les portes.`,
+  applicationName: "RawSpot° Football",
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/icon.svg",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: BRAND_COLORS.gold,
 };
 
 export default function RootLayout({
